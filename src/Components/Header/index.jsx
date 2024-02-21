@@ -1,24 +1,18 @@
 import { Home, LogIn, ShoppingBag, ShoppingCart } from "react-feather";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import "./header.scss";
+import { Logout } from "../../store/ApiSlice/authSlice";
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
   const location = useLocation();
   console.log("location", location);
 
   return (
     <div className="products_header">
-      <div
-        className={`header_item ${location.pathname === "/" ? "active" : ""}`}
-        onClick={() => {
-          navigate("/");
-        }}
-      >
-        Home <Home size={18} />
-      </div>
       <div
         className={`header_item ${
           location.pathname === "/products" ? "active" : ""
@@ -45,10 +39,11 @@ const Header = () => {
           location.pathname === "/login" ? "active" : ""
         }`}
         onClick={() => {
-          navigate("/login");
+          dispatch(Logout());
+          navigate("/");
         }}
       >
-        Login <LogIn size={18} />
+        Logout <LogIn size={18} />
       </div>
     </div>
   );
