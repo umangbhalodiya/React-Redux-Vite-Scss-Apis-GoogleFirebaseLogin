@@ -1,0 +1,31 @@
+.products_header {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  .header_item {
+    cursor: pointer;
+    gap: 10px;
+    margin: 20px;
+    align-items: center;
+    border: 1px solid transparent;
+    display: flex;
+    color: #fff;
+    background: #003d4e;
+    justify-content: center;
+    width: 100px;
+    border-radius: 5px;
+    padding: 10px;
+    &:hover {
+      background-color: transparent;
+      border: 1px solid #003d4e;
+      color: #003d4e;
+      font-weight: 500;
+    }
+  }
+  .active {
+    background-color: transparent;
+    border: 1px solid #003d4e;
+    color: #003d4e;
+    font-weight: 500;
+  }
+}

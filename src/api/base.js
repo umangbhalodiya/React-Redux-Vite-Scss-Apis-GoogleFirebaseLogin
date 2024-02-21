@@ -2,7 +2,7 @@ import axios from "axios";
 import { authHeader } from "../helpers/authHelper";
 
 const axiosApi = axios.create({
-  baseURL: `https://api.vtalkz.com/api/v1/`,
+  baseURL: `https://fakestoreapi.com/products`,
 });
 export const axiosInstance = axiosApi;
 export async function get(url, config = {}) {
