@@ -6,6 +6,7 @@ import commonStateSlice from "./ApiSlice/commonStateSlice";
 import productSlice from "./ApiSlice/productSlice";
 import cartSlice from "./ApiSlice/cartSlice";
 
+// All reducers are combined here
 const reducers = combineReducers({
   auth: authSlice,
   commonStates: commonStateSlice,
@@ -16,19 +17,21 @@ const reducers = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["auth", "commonStates", "products", "cart"],
+  whitelist: ["auth", "commonStates", "products", "cart"], // This is the list of reducers that you want to persist
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
-const isProd = window?.location?.href?.includes("app.vtalkz.com");
+
+// check if the environment is production
+const isProd = window?.location?.href?.includes("yourdomain.com"); 
 
 const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false,
+      serializableCheck: false, 
     }),
-  devTools: isProd ? false : true,
+  devTools: isProd ? false : true,  // disable redux devtools in production
 });
 
 export const persistor = persistStore(store);

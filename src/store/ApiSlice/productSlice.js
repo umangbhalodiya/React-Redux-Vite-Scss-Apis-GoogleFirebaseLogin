@@ -1,13 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../api/base";
 
+//initial states with default values
 const initialState = {
   status: "idle",
   error: null,
-  products: [],
-  singleProduct: {},
+  products: [], // the state is used to store all products
+  singleProduct: {}, // the state is used to store single product object for single product page
 };
 
+//  Get all products from the server
 export const getProducts = createAsyncThunk(
   "/productSlice/getProducts",
   async (body) => {
@@ -24,6 +26,8 @@ export const productSlice = createSlice({
   name: "products",
   initialState: initialState,
   reducers: {
+    // Below reducer is common reducer to manage all state values
+    // How to use : dispatch(setVisetProducts({stateName: 'products', data: data}))
     setVisetProducts: (state, action) => {
       state[action.payload.stateName] = action.payload.data;
     },
@@ -44,5 +48,6 @@ export const productSlice = createSlice({
   },
 });
 
+//exporting custom reducers
 export const { setVisetProducts } = productSlice.actions;
 export default productSlice.reducer;

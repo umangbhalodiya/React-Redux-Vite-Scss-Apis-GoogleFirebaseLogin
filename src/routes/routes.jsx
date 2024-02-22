@@ -5,14 +5,11 @@ import Products from "./Products";
 import { Protectedroute } from "./protectedroute";
 import Cart from "./Cart";
 
+// all routes are defined here including protected routes
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <Protectedroute>
-        <Home />
-      </Protectedroute>
-    ),
+    element: <Home />,
   },
   {
     path: "/products",

@@ -1,18 +1,18 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { axiosInstance } from "../../api/base";
-import { authHeader, authHeaderForm } from "../../helpers/authHelper";
+// import { axiosInstance } from "../../api/base";
+// import { authHeader, authHeaderForm } from "../../helpers/authHelper";
 
 const initialState = {
   count: 0,
 };
 
+// Rest api functions to make request call
+
 // export const getApis = createAsyncThunk(
 //   "/commonStateSlice/getApis",
 //   async (body) => {
 //     try {
-//       const response = await axiosInstance.get(`api-doc`, {
-//         headers: { ...authHeader() },
-//       });
+//       const response = await axiosInstance.get(`endpoint`);
 //       return response.data;
 //     } catch (e) {
 //       return e.response.data;
@@ -24,9 +24,7 @@ const initialState = {
 //   "/commonStateSlice/deleteApi",
 //   async (body) => {
 //     try {
-//       const response = await axiosInstance.delete(`api-doc/${body}`, {
-//         headers: { ...authHeader() },
-//       });
+//       const response = await axiosInstance.delete(`endpoint/${body}`);
 //       return response.data;
 //     } catch (e) {
 //       return e.response.data;
@@ -38,23 +36,7 @@ const initialState = {
 //   "/commonStateSlice/updateApi",
 //   async (body) => {
 //     try {
-//       const response = await axiosInstance.put(`api-doc/${body?._id}`, body, {
-//         headers: { ...authHeader() },
-//       });
-//       return response.data;
-//     } catch (e) {
-//       return e.response.data;
-//     }
-//   }
-// );
-
-// export const changeApiIndex = createAsyncThunk(
-//   "/commonStateSlice/changeApiIndex",
-//   async (body) => {
-//     try {
-//       const response = await axiosInstance.put(`api-doc/reorder`, body, {
-//         headers: { ...authHeader() },
-//       });
+//       const response = await axiosInstance.put(`endpoint/${body?._id}`, body);
 //       return response.data;
 //     } catch (e) {
 //       return e.response.data;
@@ -66,9 +48,7 @@ const initialState = {
 //   "/commonStateSlice/addApis",
 //   async (body) => {
 //     try {
-//       const response = await axiosInstance.post(`api-doc`, body, {
-//         headers: { ...authHeader() },
-//       });
+//       const response = await axiosInstance.post(`endpoint`, body);
 //       return response.data;
 //     } catch (e) {
 //       return e.response.data;
@@ -80,10 +60,12 @@ export const commonStateSlice = createSlice({
   name: "commonStates",
   initialState: initialState,
   reducers: {
+    // Below reducer is common reducer to manage all state values
+    // How to use : dispatch(setCommonState({stateName: 'count', data: 1}))
     setCommonState: (state, action) => {
       state[action.payload.stateName] = action.payload.data;
     },
-    resetCommonStates: () => initialState,
+    resetCommonStates: () => initialState, //reset all state values to initial state
   },
   extraReducers(builder) {
     builder;
@@ -101,5 +83,6 @@ export const commonStateSlice = createSlice({
   },
 });
 
-export const { setCommonState ,resetCommonStates} = commonStateSlice.actions;
+//exporting custom reducers
+export const { setCommonState, resetCommonStates } = commonStateSlice.actions;
 export default commonStateSlice.reducer;

@@ -1,9 +1,9 @@
+// Usage: This file is used to manage the user session and authentication related functions.
 export const authHeader = () => {
   let sessionObj = getSession();
-  if (sessionObj && sessionObj.access_token) {
+  if (sessionObj) {
     return {
-      Authorization: "Bearer " + sessionObj.access_token,
-      "x-api-key": sessionObj?.userInfo?.apiKey,
+      Authorization: "Bearer " + "Your Token",
       "Content-Security-Policy": "*",
       "Access-Control-Allow-Origin": "*",
       "X-Content-Type-Options": "nosniff",
@@ -15,7 +15,6 @@ export const authHeader = () => {
     };
   } else {
     return {
-      "x-api-key": sessionObj?.userInfo?.apiKey,
       "Content-Security-Policy": "*",
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "*",
@@ -26,45 +25,13 @@ export const authHeader = () => {
       "ngrok-skip-browser-warning": true,
     };
   }
-};
-
-export const adminHeader = () => {
-  let sessionObj = getCurrUser();
-
-  return {
-    "x-api-key": sessionObj?.userInfo?.apiKey,
-    "Content-Security-Policy": "*",
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "*",
-    "Access-Control-Allow-Headers": "*",
-    "Content-Type": "application/json",
-    "X-Frame-Options": "SAMEORIGIN",
-    "X-Content-Type-Options": "nosniff",
-    "ngrok-skip-browser-warning": true,
-  };
-};
-
-export const chatAuth = () => {
-  let sessionObj = getSession();
-  return {
-    "x-api-key": sessionObj?.userInfo?.apiKey,
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "*",
-    "Access-Control-Allow-Headers": "*",
-    "Content-Type": "application/json",
-    "X-Frame-Options": "SAMEORIGIN",
-    "X-Content-Type-Options": "nosniff",
-    "ngrok-skip-browser-warning": true,
-    "x-auth-token": sessionObj.access_token,
-  };
 };
 
 export const authHeaderForm = () => {
   let sessionObj = getSession();
-  if (sessionObj && sessionObj.access_token) {
+  if (sessionObj) {
     return {
-      "x-api-key": sessionObj?.userInfo?.apiKey,
-      Authorization: "Bearer " + sessionObj.access_token,
+      Authorization: "Bearer " + "Your Token",
       "Content-Security-Policy": "default-src 'self',frame-src 'self'",
       "Access-Control-Allow-Origin": "*",
       "X-Content-Type-Options": "nosniff",
@@ -76,7 +43,6 @@ export const authHeaderForm = () => {
     };
   } else {
     return {
-      "x-api-key": sessionObj?.userInfo?.apiKey,
       "Content-Security-Policy": "default-src 'self',frame-src 'self'",
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Methods": "*",
@@ -89,32 +55,7 @@ export const authHeaderForm = () => {
   }
 };
 
-export const setSession = (sessionObj, rememberMe) => {
-  if (sessionObj.userInfo && sessionObj.access_token) {
-    // Cookies.set("authUser", JSON.stringify(sessionObj), { expires: 1 });
-    localStorage.setItem("authUser", JSON.stringify(sessionObj));
-  }
-};
-
 export const getSession = () => {
-  // const cookieVal = Cookies.get("authUser") || null;
+  // get user details from local storage
   return JSON.parse(localStorage.getItem("authUser"));
-};
-export const getCurrUser = () => {
-  return JSON.parse(localStorage.getItem("currUser"));
-};
-
-const getLanguage = () => {
-  let language = localStorage.getItem("i18nextLng");
-  return language;
-};
-
-export const logout = () => {
-  sessionStorage.clear();
-  localStorage.removeItem("authUser");
-  localStorage.removeItem("userInfo");
-  localStorage.removeItem("token");
-  localStorage.removeItem("data");
-  sessionStorage.clear();
-  sessionStorage.removeItem("persist:root");
 };

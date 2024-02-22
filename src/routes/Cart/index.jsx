@@ -6,14 +6,14 @@ import { setCartData } from "../../store/ApiSlice/cartSlice";
 import toast, { Toaster } from "react-hot-toast";
 
 const Cart = () => {
+  // get cart items from redux store
   const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
+  // remove cart item from redux store
   const removeCartItem = (prod) => {
-    console.log("prod", prod);
-    let cart = cartItems.filter((item) => item.id !== prod.id);
-    console.log("object", cart);
-    dispatch(setCartData({ stateName: "cartItems", data: cart }));
+    let cart = cartItems.filter((item) => item.id !== prod.id); // filter the cart items and remove the selected product
+    dispatch(setCartData({ stateName: "cartItems", data: cart })); // set the updated cart items to redux store
     toast.success("Product removed from cart");
   };
 
@@ -23,15 +23,15 @@ const Cart = () => {
       <Toaster />
       <div className="cart_items">
         {cartItems?.length > 0 ? (
-          cartItems?.map((item) => {
+          cartItems?.map((item, i) => {
             return (
-              <div key={item.id} className="cart_item">
+              <div key={i} className="cart_item">
                 <img src={item?.image} />
-
                 <div className="cart_item_detail">
                   <div
                     className="item_title"
                     onClick={() => {
+                      // remove the product from cart
                       removeCartItem(item);
                     }}
                   >

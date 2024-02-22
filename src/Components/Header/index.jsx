@@ -1,15 +1,18 @@
-import { Home, LogIn, ShoppingBag, ShoppingCart } from "react-feather";
+import { LogIn, ShoppingBag, ShoppingCart } from "react-feather";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import "./header.scss";
 import { Logout } from "../../store/ApiSlice/authSlice";
 
 const Header = () => {
+  // get cart items from redux store
+  const { cartItems } = useSelector((state) => state.cart);
+
+  // get current location to set active class on header items
+  const location = useLocation();
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { cartItems } = useSelector((state) => state.cart);
-  const location = useLocation();
-  console.log("location", location);
 
   return (
     <div className="products_header">
@@ -18,6 +21,7 @@ const Header = () => {
           location.pathname === "/products" ? "active" : ""
         }`}
         onClick={() => {
+          // redirect to products page
           navigate("/products");
         }}
       >
@@ -28,6 +32,7 @@ const Header = () => {
           location.pathname === "/cart" ? "active" : ""
         }`}
         onClick={() => {
+          // redirect to cart page
           navigate("/cart");
         }}
       >
@@ -39,6 +44,7 @@ const Header = () => {
           location.pathname === "/login" ? "active" : ""
         }`}
         onClick={() => {
+          // redirect to login page and user states will be reset to initial state
           dispatch(Logout());
           navigate("/");
         }}

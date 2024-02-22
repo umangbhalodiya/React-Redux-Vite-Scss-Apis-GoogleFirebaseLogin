@@ -3,7 +3,7 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 const configs = {
   apiKey: "apikey",
   authDomain: " ",
-  projectId: " ",                       //    replace this object with tials from your firebase project
+  projectId: " ",  // replace this object with tials from your firebase project
   storageBucket: " ",
   messagingSenderId: "784333444370",
   appId: "x:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
@@ -21,7 +21,6 @@ const loginWithProvider = (provider) => signInWithPopup(auth, provider);
 export const loginWithGoogle = () => loginWithProvider(googleProvider);
 
 // Put the below click code in your component to open google login popup  after thet remove from below
-
 const handleGoogleLogin = async () => {
   const { loginWithGoogle } = await import("../../../../firebase");
   try {

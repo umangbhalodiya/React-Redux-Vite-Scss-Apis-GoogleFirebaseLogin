@@ -10,6 +10,8 @@ const Home = () => {
   const [loginData, setLoginData] = useState({});
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  // validate function to check if all fields are filled
   const validate = () => {
     let isValid = true;
     if (
@@ -34,15 +36,20 @@ const Home = () => {
     }
     return isValid;
   };
+
+  // handle submit function to dispatch the data to redux store
   const handleSubmit = () => {
+    // validate the form
     if (validate()) {
       dispatch(setUserData({ stateName: "user", data: loginData }));
       dispatch(setUserData({ stateName: "isLoggedIn", data: true }));
       toast.success("Login Successful");
+      // redirect to products page after successful login
       navigate("/products");
     }
   };
 
+  //common input change function to set the input values to state
   const handleChange = (e) => {
     setLoginData((prev) => {
       return { ...prev, [e.target.name]: e.target.value };

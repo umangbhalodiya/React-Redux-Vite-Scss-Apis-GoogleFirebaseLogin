@@ -2,29 +2,34 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProducts } from "../../store/ApiSlice/productSlice";
 import { useEffect } from "react";
 import "./products.scss";
-import { Home, ShoppingCart } from "react-feather";
-import { useNavigate } from "react-router";
+import { ShoppingCart } from "react-feather";
 import { setCartData } from "../../store/ApiSlice/cartSlice";
-import toast, { ToastBar, Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import Header from "../../Components/Header";
 
 const Products = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // get products from redux store
   const { products } = useSelector((state) => state.products);
+  // get cart items from redux store
   const { cartItems } = useSelector((state) => state.cart);
 
+  // get products from api
   useEffect(() => {
+    // calling the getProducts action to get the products from api
     dispatch(getProducts());
   }, []);
 
+  // add to cart function to add the product to cart
   const addToCart = (item) => {
+    // check if the product is already in cart
     const existingItem = cartItems.find((cartItem) => cartItem.id === item.id);
     if (existingItem) {
       toast.success("Product Already in Cart.", {
         position: "top-right",
       });
     } else {
+      // if product is not in cart then add the product to cart
       dispatch(
         setCartData({
           stateName: "cartItems",
@@ -46,7 +51,7 @@ const Products = () => {
           products?.map((item, i) => {
             return (
               <div className="product_item" key={i}>
-                <img src={item.image} />
+                <img src={item?.image} />
                 <div className="product_name">
                   <h3>{item?.title}</h3>
                   <h4>${item?.price}</h4>
@@ -54,7 +59,7 @@ const Products = () => {
                 <h6>{item?.description}</h6>
                 <button
                   onClick={() => {
-                    addToCart(item);
+                    addToCart(item); // add product to cart
                   }}
                 >
                   Add <ShoppingCart size={18} />
