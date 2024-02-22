@@ -27,8 +27,8 @@ export const productSlice = createSlice({
   initialState: initialState,
   reducers: {
     // Below reducer is common reducer to manage all state values
-    // How to use : dispatch(setVisetProducts({stateName: 'products', data: data}))
-    setVisetProducts: (state, action) => {
+    // How to use : dispatch(setProductData({stateName: 'products', data: data}))
+    setProductData: (state, action) => {
       state[action.payload.stateName] = action.payload.data;
     },
   },
@@ -49,5 +49,5 @@ export const productSlice = createSlice({
 });
 
 //exporting custom reducers
-export const { setVisetProducts } = productSlice.actions;
+export const { setProductData } = productSlice.actions;
 export default productSlice.reducer;

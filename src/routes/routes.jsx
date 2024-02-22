@@ -4,6 +4,7 @@ import Home from "./Home";
 import Products from "./Products";
 import { Protectedroute } from "./protectedroute";
 import Cart from "./Cart";
+import ProductDetails from "./ProductDetails";
 
 // all routes are defined here including protected routes
 const router = createBrowserRouter([
@@ -24,6 +25,14 @@ const router = createBrowserRouter([
     element: (
       <Protectedroute>
         <Cart />
+      </Protectedroute>
+    ),
+  },
+  {
+    path: "/products/:id",
+    element: (
+      <Protectedroute>
+        <ProductDetails />
       </Protectedroute>
     ),
   },

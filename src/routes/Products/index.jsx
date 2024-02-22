@@ -1,14 +1,16 @@
 import { useDispatch, useSelector } from "react-redux";
-import { getProducts } from "../../store/ApiSlice/productSlice";
+import { getProducts, setProductData } from "../../store/ApiSlice/productSlice";
 import { useEffect } from "react";
 import "./products.scss";
 import { ShoppingCart } from "react-feather";
 import { setCartData } from "../../store/ApiSlice/cartSlice";
 import toast, { Toaster } from "react-hot-toast";
 import Header from "../../Components/Header";
+import { useNavigate } from "react-router-dom";
 
 const Products = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   // get products from redux store
   const { products } = useSelector((state) => state.products);
   // get cart items from redux store
@@ -51,7 +53,17 @@ const Products = () => {
           products?.map((item, i) => {
             return (
               <div className="product_item" key={i}>
-                <img src={item?.image} />
+                <img
+                  src={item?.image}
+                  onClick={() => {
+                    // set the selected product to redux store
+                    dispatch(
+                      setProductData({ stateName: "singleProduct", data: item })
+                    );
+                    // navigate to product details page
+                    navigate(`/products/${item.id}`);
+                  }}
+                />
                 <div className="product_name">
                   <h3>{item?.title}</h3>
                   <h4>${item?.price}</h4>

@@ -1,0 +1,17 @@
+.productpage_section {
+  width: 700px;
+
+  .productItem {
+    margin: 100px;
+    width: 100%;
+    border-radius: 20px;
+    background-color: #f3f3f3;
+    box-shadow: 0px 0px 10px 0px #ababab;
+    padding: 20px;
+    display: flex;
+    img {
+      border-radius: 20px;
+      width: 400px;
+    }
+  }
+}
