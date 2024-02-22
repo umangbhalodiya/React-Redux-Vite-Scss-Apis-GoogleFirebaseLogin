@@ -4,6 +4,7 @@ import { Star, Trash2 } from "react-feather";
 import Header from "../../Components/Header";
 import { setCartData } from "../../store/ApiSlice/cartSlice";
 import toast, { Toaster } from "react-hot-toast";
+import NoCartImg from "../../assets/no-cart-img.jpg";
 
 const Cart = () => {
   // get cart items from redux store
@@ -24,34 +25,49 @@ const Cart = () => {
       <Header />
       <Toaster />
       <div className="cart_items">
-        {cartItems?.length > 0 ? (
-          cartItems?.map((item, i) => {
-            return (
-              <div key={i} className="cart_item">
-                <img src={item?.image} />
-                <div className="cart_item_detail">
-                  <div
-                    className="item_title"
-                    onClick={() => {
-                      // remove the product from cart
-                      removeCartItem(item);
-                    }}
-                  >
-                    {item?.title} <Trash2 className="icon" color="red" />
+        <div className="container">
+          {cartItems?.length > 0 ? (
+            cartItems?.map((item, i) => {
+              return (
+                <div key={i} className="cart_item">
+                  <div className="cart-product-img">
+                    <img src={item?.image} />
                   </div>
-                  <div className="item_price">${item?.price}</div>
-                  <div className="item_description">{item?.description}</div>
-                  <div className="item_rating">
-                    <Star color="#003d4e" /> {item?.rating?.rate}
-                    <small> ({item?.rating?.count})</small>
+                  <div className="cart_item_detail">
+                    <div
+                      className="item_title"
+                      onClick={() => {
+                        // remove the product from cart
+                        removeCartItem(item);
+                      }}
+                    >
+                      <h4>{item?.title}</h4>
+                      <div className="icon">
+                        <Trash2 color="red" />
+                      </div>
+                    </div>
+                    <div className="item_price">
+                      <span>${item?.price}</span>
+                    </div>
+                    <div className="item_description">
+                      <p>{item?.description}</p>
+                    </div>
+                    <div className="item_rating">
+                      <Star color="#003d4e" /> {item?.rating?.rate}
+                      <small> ({item?.rating?.count})</small>
+                    </div>
                   </div>
                 </div>
+              );
+            })
+          ) : (
+            <div className="empty-cart-layout">
+              <div className="empty_cart">
+                <img src={NoCartImg} alt="NoCartImg" />
               </div>
-            );
-          })
-        ) : (
-          <div className="empty_cart">Cart is Empty</div>
-        )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
