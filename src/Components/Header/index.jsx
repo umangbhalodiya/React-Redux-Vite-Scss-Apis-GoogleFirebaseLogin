@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router";
 import "./header.scss";
 import { Logout } from "../../store/ApiSlice/authSlice";
+import { setCartData } from "../../store/ApiSlice/cartSlice";
 
 const Header = () => {
   // get cart items from redux store
@@ -46,6 +47,9 @@ const Header = () => {
         onClick={() => {
           // redirect to login page and user states will be reset to initial state
           dispatch(Logout());
+          // setting cart items to empty array comment below line for not to clear cart items on logout
+          dispatch(setCartData({ stateName: "cartItems", data: [] }));
+          // redirect to login page
           navigate("/");
         }}
       >

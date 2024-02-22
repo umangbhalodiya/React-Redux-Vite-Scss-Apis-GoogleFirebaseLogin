@@ -43,7 +43,9 @@ const Home = () => {
     if (validate()) {
       dispatch(setUserData({ stateName: "user", data: loginData }));
       dispatch(setUserData({ stateName: "isLoggedIn", data: true }));
-      toast.success("Login Successful");
+      toast.success("Login Successful", {
+        position: "top-right",
+      });
       // redirect to products page after successful login
       navigate("/products");
     }

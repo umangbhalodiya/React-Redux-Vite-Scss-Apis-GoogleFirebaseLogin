@@ -14,7 +14,9 @@ const Cart = () => {
   const removeCartItem = (prod) => {
     let cart = cartItems.filter((item) => item.id !== prod.id); // filter the cart items and remove the selected product
     dispatch(setCartData({ stateName: "cartItems", data: cart })); // set the updated cart items to redux store
-    toast.success("Product removed from cart");
+    toast.success("Product removed from cart", {
+      position: "top-right",
+    });
   };
 
   return (
