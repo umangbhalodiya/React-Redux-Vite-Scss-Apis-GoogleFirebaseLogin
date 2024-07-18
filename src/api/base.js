@@ -1,45 +1,34 @@
 import axios from "axios";
-import { authHeader } from "../helpers/authHelper";
 
 const axiosApi = axios.create({
-  baseURL: `https://api.vtalkz.com/api/v1/`,
+  baseURL: `https://api.example.com/api/`,
 });
 export const axiosInstance = axiosApi;
-export async function get(url, config = {}) {
-  return await axiosApi
-    .get(url, { params: config, headers: authHeader() })
-    .then((response) => response)
-    .catch((error) => error.response);
-}
 
-export async function patch(url, data, config = {}) {
-  return await axiosApi
-    .patch(url, { ...data }, { ...config })
-    .then((response) => response)
-    .catch((error) => error.response);
-}
-
-export async function post(url, data, config = {}) {
-  return axiosApi
-    .post(url, { ...data }, { ...config, headers: authHeader() })
-    .then((response) => response)
-    .catch((error) => error.response);
-}
-
-export async function put(url, data, config = {}) {
-  return axiosApi
-    .put(url, { ...data }, { ...config })
-    .then((response) => response);
-}
-
-export async function del(url, config = {}) {
-  return await axiosApi.delete(url, { ...config }).then((response) => response);
-}
-
-export function isSuccessResp(status) {
-  //2xx Status Codes [Success]
-  if (status >= 200 && status <= 299) {
-    return true;
+axiosInstance.interceptors.request.use(
+  (config) => {
+    config.headers.Authorization = "Bearer your_token";
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
-  return false;
-}
+);
+
+axiosInstance.interceptors.response.use(
+  (response) => {
+    console.log("Response:", response);
+    return response;
+  },
+  (error) => {
+    console.log("Error response:", error.response);
+    if (error.response && error.response.status === 401) {
+      console.log("Unauthorized, redirecting to login...");
+      localStorage.clear();
+      sessionStorage.clear();
+      window.location.href = "/login";
+      // window.location.reload();
+    }
+    return Promise.reject(error);
+  }
+);

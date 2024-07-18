@@ -4,21 +4,32 @@ import Home from "./Home";
 import Products from "./Products";
 import { Protectedroute } from "./protectedroute";
 import Cart from "./Cart";
+import DefaultPage from "../Components/DefaultPage/DefaultPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+    element: (
+      <DefaultPage>
+        <Home />
+      </DefaultPage>
+    ),
   },
   {
     path: "/products",
-    element: <Products />,
+    element: (
+      <DefaultPage>
+        <Products />
+      </DefaultPage>
+    ),
   },
   {
     path: "/cart",
     element: (
       <Protectedroute>
-        <Cart />
+        <DefaultPage>
+          <Cart />
+        </DefaultPage>
       </Protectedroute>
     ),
   },
